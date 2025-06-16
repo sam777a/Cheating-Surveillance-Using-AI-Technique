@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logged Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        img {
+            max-width: 300px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Logged Events</h1>
+    <ul>
+        {% for file in files %}
+        <li>
+            <a href="{{ url_for('serve_log', filename=file) }}">{{ file }}</a><br>
+            <img src="{{ url_for('serve_log', filename=file) }}" alt="{{ file }}">
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Back to Dashboard</a>
+</body>
+</html>
