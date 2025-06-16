@@ -1,36 +1,64 @@
-# Cheating Surveillance System
+# Cheating Surveillance Using AI Technique
 
 ## Overview
-The **Cheating Surveillance System** is designed to detect cheating during Online Interviews/Exams by monitoring head and pupil movements and identifying unauthorized mobile phone usage. This system integrates facial landmark detection with **Shape Predictor 68** and object detection using **YOLO**, trained on a cellphone detection dataset from Roboflow.
 
-## Features
-- **Head and Pupil Movement Detection**: Uses **dlib's Shape Predictor 68** to track facial landmarks and detect suspicious gaze patterns.
-- **Mobile Phone Detection**: Utilizes a **YOLOv12 model** trained on the [Roboflow Cellphone Detection Dataset](https://universe.roboflow.com/d1156414/cellphone-0aodn) to detect mobile phones in real-time.
-- **Real-Time Monitoring**: Processes live video feeds for instant analysis and detection.
-- **Alert System**: Detects and flags potential cheating behavior, such as excessive head or pupil movement in the left, right, up, or down direction for longer than the allowed time.
+Proposed System / Method of solution
+The proposed system is a cutting-edge, real-time AI-powered surveillance solution designed to detect cheating behaviors during online interviews and examinations, thereby enhancing academic integrity in virtual environments. It overcomes the limitations of traditional proctoring by leveraging advanced artificial intelligence and computer vision technologies to provide continuous, non-intrusive monitoring.
+At the core of the system is the integration of powerful open-source libraries and frameworks. OpenCV is used for real-time video capture and image processing, while MediaPipe facilitates precise facial landmark detection critical for analyzing head and eye movements. Dlib enhances face detection robustness, and YOLOv12, a state-of-the-art object detection model, identifies prohibited objects such as mobile phones within the candidate’s environment.
+The system continuously monitors key behavioral cues indicative of cheating, including suspicious head movements, frequent glances away from the screen, and the presence of unauthorized devices. Upon detecting such suspicious activity, the system immediately generates alerts to notify remote invigilators for timely intervention.
+A distinguishing feature of the solution is its Web-Based Invigilator Dashboard, developed using Flask and Flask-SocketIO, which offers a real-time, browser-accessible interface. This dashboard allows invigilators to view live video streams, receive instant notifications of flagged behaviors, and review detailed logs containing timestamps and visual evidence such as screenshots. This facilitates both immediate response and post-examination review.
+The modular and scalable Python-based architecture ensures smooth integration of various detection modules and supports adaptability across diverse examination scenarios, including academic institutions and professional certification environments. By combining AI-driven analytics with an accessible monitoring platform, the system effectively addresses concerns related to scalability, accuracy, and user privacy in remote proctoring.
+Overall, this project aims to redefine online examination supervision by delivering a reliable, intelligent, and user-friendly solution that upholds academic honesty and fosters trust in digital assessment environments.
+
+       The key contributions of the proposed system include:
+•Head and Eye Movement Detection: Accurately identifies suspicious head turns and prolonged eye gaze away from the screen, which are common indicators of cheating during online exams and interviews.
+•Unauthorized Device Detection: Detects the presence of prohibited devices such as mobile phones within the examination environment, using advanced object detection models to prevent unauthorized communication or information access.
+•Real-Time Alert Generation: Provides immediate notifications to remote invigilators upon detecting suspicious behaviors or unauthorized device usage, enabling timely intervention.
+•Web-Based Monitoring Dashboard: Offers a user-friendly, real-time dashboard for invigilators to remotely observe live video feeds, receive alerts, and review logged evidence, enhancing the effectiveness and scalability of online proctoring
+
+2.5.1	Methodology
+The operational workflow of the Cheating Surveillance System begins with the activation of the candidate’s camera to capture live video footage during online exams or interviews. The system continuously processes this video stream in real-time, utilizing AI techniques to analyze head movements, eye gaze, and the presence of unauthorized objects such as mobile phones.
+Facial landmarks are detected using MediaPipe, enabling precise tracking of head and pupil movements to identify suspicious behaviors like looking away from the screen for prolonged periods. Simultaneously, the YOLOv12 model, combined with dlib, scans the environment for prohibited devices in the candidate’s vicinity.
+When suspicious behavior or unauthorized device usage is detected, the system instantly generates alerts that are sent to remote invigilators through the web-based dashboard. This dashboard, built with Flask and Flask-SocketIO, allows invigilators to monitor live feeds, receive real-time notifications, and review evidence captured as screenshots or video clips.
+By providing continuous, automated monitoring and immediate alerting, the system enhances the integrity and fairness of online assessments, enabling timely intervention and maintaining a secure examination environment.
+
 
 ## Technologies Used
 - **Python**
 - **OpenCV** (for video processing)
+- MediaPipe (face/eye tracking), 
 - **dlib** (for facial landmark detection)
 - **YOLO (You Only Look Once)** (for object detection)
+- PyTorch
 - **Roboflow Dataset** (for training the mobile detection model)
 
 ## Folder Structure
 ```
-cheating-surveillance/
-│── models/                 # Contains trained YOLO weights and shape predictor model  
-    |__ best_yolov8.pt
-    |__ best_yolov12.pt
-    |__ shape_predictor_68_face_landmarks.dat 
-│── log                     # Screenshots
-│── main.py                 # Entry point for real-time detection
-│── requirements.txt        # Required dependencies
-│── README.md               # Project documentation
-│── head_pose.py            # Head movement detection
-│── eye_movement.py         # Gaze Detection
-│── mobile_detection.py     # Mobile detection
-│── Demo_vid/               # Folder containing demo videos
+
+├── .vscode/
+├── Cheating-Surveillance-System-main/
+│   ├── __pycache__/
+│   ├── Demo_vid/                  # Folder for demo or test videos
+│   ├── log/                       # Directory for saving screenshot logs
+│   ├── model/                     # Contains pretrained models
+│   │   ├── best_yolov8.pt
+│   │   ├── best_yolov12.pt
+│   │   └── shape_predictor_68_face_landmarks.dat
+│   ├── templates/                 # HTML files for web dashboard
+│   │   ├── index.html             # Dashboard UI
+│   │   └── logs.html              # Logs viewer UI
+│   ├── debug.log                  # System logs for debugging
+│   ├── eye_movement.py            # Eye tracking and pupil movement detection
+│   ├── head_pose.py               # Head direction detection using dlib
+│   ├── main.py                    # Main control script (stream, detect, serve)
+│   ├── mobile_detection.py        # YOLO-based mobile phone detection
+│   ├── README.md                  # Project documentation
+│   ├── requirements.txt           # Required Python packages
+│   ├── requirements1.txt          # Possibly a backup or test dependency list
+│   ├── utils.py                   # Utility/helper functions
+│   ├── yolov8n.pt                 # Additional YOLOv8 model
+├── dlib-env-310/                  # Virtual environment directory
+├── log/             
 ```
 
 ## Installation
@@ -45,8 +73,8 @@ Ensure you have the following installed:
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Sania-hasann/Cheating-Surveillance-System.git
-   cd Cheating-Surveillance-System
+   https://github.com/sam777a/Cheating-Surveillance-Using-AI-Technique.git
+   cd Cheating-Surveillance-Using-AI-Technique
    ```
 2. Install dependencies:
    ```bash
@@ -72,11 +100,6 @@ python main.py
 1. **Facial Landmark Detection**: Detects and tracks head movements and pupil direction.
 2. **YOLO-based Object Detection**: Identifies mobile phones in the video feed.
 3. **Cheating Behavior Analysis**: Flags abnormal behavior such as frequent head turning or gaze shifts.
-
-## Demo Videos
-- **[Gaze Detection](https://github.com/Sania-hasann/Cheating-Surveillance-System/blob/main/Demo_vid/gaze_detection.mp4)**
-- **[Head Movement Detection](https://github.com/Sania-hasann/Cheating-Surveillance-System/blob/main/Demo_vid/headpose_detection.mp4)**
-- **[Mobile Phone Detection](https://github.com/Sania-hasann/Cheating-Surveillance-System/blob/main/Demo_vid/Mobile-detection.mp4)**
 
 ## Dataset
 The mobile phone detection model is trained on the **Roboflow Cellphone Detection Dataset**. You can access it here: [Roboflow Cellphone Dataset](https://universe.roboflow.com/d1156414/cellphone-0aodn).
