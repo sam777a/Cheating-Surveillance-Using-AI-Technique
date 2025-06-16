@@ -1,0 +1,3 @@
+Flask==2.0.1
+Flask-SocketIO==5.1.1
+Werkzeug==2.0.3  # Add this line to pin a compatible Werkzeug version
